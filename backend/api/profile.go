@@ -3,7 +3,7 @@ package api
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"radar/dataprovider/sql"
+	"radar/providers/sql"
 	"radar/entities"
 	"radar/services"
 )

@@ -2,7 +2,7 @@ package initializer
 
 import (
 	"github.com/jinzhu/gorm"
-	"radar/dataprovider/sql"
+	"radar/providers/sql"
 	"radar/entities"
 )
 

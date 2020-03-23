@@ -3,7 +3,7 @@ package repositories
 import (
 	"fmt"
 	"github.com/jinzhu/gorm"
-	"radar/dataprovider/sql"
+	"radar/providers/sql"
 	"radar/entities"
 )
 

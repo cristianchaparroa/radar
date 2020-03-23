@@ -4,7 +4,7 @@ import (
 	"github.com/gin-contrib/zap"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
-	"radar/dataprovider/sql"
+	"radar/providers/sql"
 	"radar/initializer"
 	"time"
 )
@@ -18,6 +18,9 @@ type IRadarServer interface {
 type RadarServer struct {
 	sql    sql.Client
 	engine *gin.Engine
+
+	pc *ProfileController
+	lc *LocationController
 }
 
 func NewRadarServer() IRadarServer {
@@ -56,12 +59,17 @@ func (s *RadarServer) migrate() {
 
 func (s *RadarServer) setupRoutes() {
 	server := s.engine.Group("/v1/")
+	ws := s.engine.Group("/ws/")
 
-	pc := NewProfileController(server, s.sql)
-	pc.Setup()
+	s.pc = NewProfileController(server, s.sql)
+	s.pc.Setup()
+
+	s.lc = NewLocationController(ws, s.sql)
+	s.lc.Setup()
 }
 
 func (s *RadarServer) Run() {
+	s.lc.StartPool()
 	s.engine.Run(":8080")
 }
 
