@@ -1,4 +1,3 @@
-
 export class LocationModel {
 
   userId:number;

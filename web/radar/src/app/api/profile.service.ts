@@ -3,13 +3,9 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class LocationAPI {
+export class ProfileService {
 
   constructor() {
-
-  }
-
-  saveLocation() {
 
   }
 }
