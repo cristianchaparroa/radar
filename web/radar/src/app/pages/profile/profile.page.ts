@@ -34,7 +34,7 @@ export class ProfilePage implements OnInit {
   constructor(private profileService: ProfileService) {}
 
   async ngOnInit() {
-    this.profileService.load();
+    this.profileService.init();
   }
 
   isProfile() {}

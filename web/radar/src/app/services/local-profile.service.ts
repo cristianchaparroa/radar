@@ -4,6 +4,9 @@ import { ProfileModel } from "../models/profile.model";
 
 const { Storage } = Plugins;
 
+/**
+ * LocalProfileService is in charge to save all data related to profile
+ */
 @Injectable({
   providedIn: "root"
 })
@@ -17,12 +20,18 @@ export class LocalProfileService {
     });
   }
 
+  /**
+   * It retrieves the profile from local storage
+   */
   async getProfile() {
     const ret = await Storage.get({ key: "profile" });
     const profile = JSON.parse(ret.value);
     return profile;
   }
 
+  /**
+   * It verfies if exist a profile saved in the local storage.
+   */
   async exist() {
     try {
       let profile = await this.getProfile();

@@ -16,6 +16,27 @@ export class ProfileService {
     private profileAPI: ProfileApiService
   ) {}
 
+  /**
+   * Init verifies if is saved a profile in the local storage if not it will
+   * create a new.
+   */
+  async init() {
+    let isProfile = await this.exist();
+    if (!isProfile) {
+      this.create();
+    }
+  }
+
+  /**
+  * It verifies if already exist a profile in the locale storage.
+  */
+  async exist() {
+    let isProfile = await this.local.exist();
+    return isProfile;
+  }
+  /**
+   * It creates a profile in the backend server and in the local storage.
+   */
   async create() {
     try {
       let profile = await this.createProfileModel();
@@ -26,12 +47,19 @@ export class ProfileService {
     }
   }
 
+  /**
+   * It creates a model of profile.
+   */
   async createProfileModel() {
     let id = uuid();
     let deviceID = await this.getDeviceID();
     return new ProfileModel(id, deviceID);
   }
 
+  /**
+   * It try to retrieves the devices ID. If is a browser it returns empty in
+   * other case it will return the deviceID.
+   */
   async getDeviceID() {
     try {
       let deviceID = await this.uniqueDeviceID.get();
@@ -39,17 +67,5 @@ export class ProfileService {
     } catch (e) {
       return "";
     }
-  }
-
-  async load() {
-    let isProfile = await this.exist();
-    if (!isProfile) {
-      this.create();
-    }
-  }
-
-  async exist() {
-    let isProfile = await this.local.exist();
-    return isProfile;
   }
 }
