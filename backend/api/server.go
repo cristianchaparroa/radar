@@ -1,11 +1,12 @@
 package api
 
 import (
+	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/zap"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
-	"radar/providers/sql"
 	"radar/initializer"
+	"radar/providers/sql"
 	"time"
 )
 
@@ -26,10 +27,14 @@ type RadarServer struct {
 func NewRadarServer() IRadarServer {
 	gin.ForceConsoleColor()
 	logger, _ := zap.NewProduction()
-
 	engine := gin.Default()
 	engine.Use(ginzap.Ginzap(logger, time.RFC3339, true))
 	engine.Use(ginzap.RecoveryWithZap(logger, true))
+
+	config := cors.DefaultConfig()
+	config.AllowOrigins = []string{"*"}
+
+	engine.Use(cors.New(config))
 
 	return &RadarServer{engine: engine}
 }

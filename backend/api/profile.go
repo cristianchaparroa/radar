@@ -52,12 +52,12 @@ func (c *ProfileController) CreateProfile(ctx *gin.Context) {
 		return
 	}
 
-	err = c.service.Create(profile)
+	p, err := c.service.Create(profile)
 
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, err)
 		return
 	}
 
-	ctx.JSON(http.StatusOK, profile)
+	ctx.JSON(http.StatusOK, p)
 }

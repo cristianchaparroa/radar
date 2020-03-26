@@ -24,6 +24,8 @@ export class MapPage implements OnInit {
 
       let location = await this.geolocationService.getLocation();
 
+      console.log(location);
+
       this.map = new Map({
           container: 'map', // container id
           style: 'mapbox://styles/mapbox/dark-v10',
@@ -37,21 +39,15 @@ export class MapPage implements OnInit {
       marker.setLngLat([location.longitude, location.latitude]);
       marker.addTo(this.map);
 
-      var dos = new Marker();
-      dos.setLngLat([4.725111, -74.268288]);
-      dos.addTo(this.map);
-
-
-      var tres = new Marker();
-      tres.setLngLat([4.725156, -74.269401]);
-      tres.addTo(this.map);
-
-
   }
 
   ngOnInit() {
       this.loadMap();
   }
+
+
+
+
 
 
 

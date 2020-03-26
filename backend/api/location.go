@@ -3,8 +3,8 @@ package api
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"radar/providers/sql"
 	"radar/pools"
+	"radar/providers/sql"
 	"radar/providers/websocket"
 	"radar/services"
 

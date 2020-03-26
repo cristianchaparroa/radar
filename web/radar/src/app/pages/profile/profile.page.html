@@ -7,24 +7,20 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-
-
   <ion-card>
     <ion-card-content>
-      La información que estas compartiendo es completamente anónima.
+      La información que estas compartiendo es completamente anónima. ¿Cuál es
+      tu estado actual referente a COVID-19?
     </ion-card-content>
   </ion-card>
 
-  <ion-list expand="block">
-
-    <ion-item>
-      <ion-label> Esta contageado con COVID-19</ion-label>
-      <ion-checkbox mode="ios" color="primary"></ion-checkbox>
-    </ion-item>
-
+  <ion-list>
+    <ion-card *ngFor="let status of statuses">
+      <ion-item [color]="status.color">
+        <ion-label>{{status.label}}</ion-label>
+        <ion-icon slot="start" [name]="status.icon"></ion-icon>
+        <ion-checkbox (ionChange)="changeStatus(status.value)" [(ngModel)]="status.isChecked"></ion-checkbox>
+      </ion-item>
+    </ion-card>
   </ion-list>
 </ion-content>
-
-<ion-footer class="ion-no-border">
-    <ion-button mode="ios" color="success" expand="block">Actualizar perfil</ion-button>
-</ion-footer>
