@@ -68,7 +68,7 @@ func (p *LocationPool) register(c ILocationClient) []error {
 	for c := range p.clients {
 
 		l := c.GetLocation()
-		m := NewLocationMessage(l.UserID, l.Latitude, l.Longitude)
+		m := NewLocationMessage(l.ProfileID, l.Latitude, l.Longitude)
 		err := c.PublishMessage(m)
 
 		if err != nil {

@@ -23,3 +23,12 @@ func NewProfileResponse(profile entities.Profile, status *entities.Status) prese
 
 	}
 }
+
+func MapProfilePresenterToEntity(profile presenters.Profile) entities.Profile {
+
+	return entities.Profile{
+		ID:        profile.ID,
+		DeviceID:  profile.DeviceID,
+		CreatedAt: profile.CreatedAt,
+	}
+}

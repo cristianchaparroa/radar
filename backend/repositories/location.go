@@ -19,5 +19,6 @@ func NewLocation(client sql.Client) ILocation {
 }
 
 func (r *Location) RegisterLocation(location entities.Location) error {
-	return r.db.Save(&location).Error
+	err :=  r.db.Save(&location).Error
+	return err
 }

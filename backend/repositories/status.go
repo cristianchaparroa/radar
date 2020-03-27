@@ -7,7 +7,7 @@ import (
 )
 
 type IStatus interface {
-	Create(userID, status string) (*entities.Status, error)
+	Create(userID, locationID, status string) (*entities.Status, error)
 }
 
 type Status struct {
@@ -18,8 +18,8 @@ func NewStatus(sql sql.Client) IStatus {
 	return &Status{db: sql.GetConnection()}
 }
 
-func (r *Status) Create(userID, status string) (*entities.Status, error) {
-	s := entities.NewStatus(userID, status)
+func (r *Status) Create(userID, locationID, status string) (*entities.Status, error) {
+	s := entities.NewStatus(userID,locationID, status)
 	err := r.db.Save(&s).Error
 	return s, err
 }

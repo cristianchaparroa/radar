@@ -8,16 +8,16 @@ export class ProfileModel {
     this.deviceID = deviceID;
   }
 
-  fromJSON(json: any) {
-    let id = json.id;
-    let deviceID = json.device_id;
-    let createdAt = json.created_at;
-    let model = new ProfileModel(id, deviceID);
-    model.createdAt = createdAt;
-    return model;
-  }
-
   JSON() {
     return JSON.stringify(this);
   }
+}
+
+export function NewProfilefromJSON(json: any) {
+  let id = json.profile.id;
+  let deviceID = json.profile.device_id;
+  let createdAt = json.profile.created_at;
+  let model = new ProfileModel(id, deviceID);
+  model.createdAt = createdAt;
+  return model;
 }

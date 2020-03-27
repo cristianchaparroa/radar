@@ -1,7 +1,11 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 
-import { ProfileModel } from "../models/profile.model";
+import { ProfileModel, NewProfilefromJSON } from "../models/profile.model";
+import { StatusModel, NewStatusModelFromJSON } from "../models/status.model";
+import { CurrentProfileModel } from "../models/current-profile.model";
+import {CreateProfileRequest} from "./request/create-profile.request";
+
 import { PROFILES_ENDPOINT } from "../../environments/environment";
 
 @Injectable({
@@ -16,16 +20,21 @@ export class ProfileApiService {
 
   constructor(protected httpClient: HttpClient) {}
 
-  async post(profile: ProfileModel) {
+  /**
+   * It performs a post request to create a new profile.
+   */
+  async post(profile: CreateProfileRequest) {
     return this.httpClient
       .post<ProfileModel>(PROFILES_ENDPOINT, profile.JSON(), this.httpOptions)
       .toPromise();
   }
-
-  async create(profile: ProfileModel) {
+  /**
+   * It creates a profile and parse the response properly.
+   */
+  async create(profile: CreateProfileRequest) {
     let response = await this.post(profile);
-    console.log(response);
-    let p = new ProfileModel("","");
-    return p.fromJSON(response);
+    let profileResponse = NewProfilefromJSON(response);
+    let statusResponse = NewStatusModelFromJSON(response);
+    return new CurrentProfileModel(profileResponse, statusResponse, profile.location);
   }
 }

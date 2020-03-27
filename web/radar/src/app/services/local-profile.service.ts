@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Plugins } from "@capacitor/core";
-import { ProfileModel } from "../models/profile.model";
+import { CurrentProfileModel } from "../models/current-profile.model";
 
 const { Storage } = Plugins;
 
@@ -13,7 +13,7 @@ const { Storage } = Plugins;
 export class LocalProfileService {
   constructor() {}
 
-  async create(profile: ProfileModel) {
+  async create(profile: CurrentProfileModel) {
     await Storage.set({
       key: "profile",
       value: JSON.stringify(profile)

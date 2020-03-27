@@ -2,15 +2,19 @@ import { Injectable } from "@angular/core";
 import { UniqueDeviceID } from "@ionic-native/unique-device-id/ngx";
 import { v4 as uuid } from "uuid";
 
-import { ProfileModel } from "../models/profile.model";
 import { LocalProfileService } from "./local-profile.service";
+import { GeolocationService } from "./geolocation.service";
+
+import { ProfileModel } from "../models/profile.model";
 import { ProfileApiService } from "../api/profile-api.service";
+import { CreateProfileRequest } from "../api/request/create-profile.request";
 
 @Injectable({
   providedIn: "root"
 })
 export class ProfileService {
   constructor(
+    private geolocationService: GeolocationService,
     private uniqueDeviceID: UniqueDeviceID,
     private local: LocalProfileService,
     private profileAPI: ProfileApiService
@@ -28,8 +32,8 @@ export class ProfileService {
   }
 
   /**
-  * It verifies if already exist a profile in the locale storage.
-  */
+   * It verifies if already exist a profile in the locale storage.
+   */
   async exist() {
     let isProfile = await this.local.exist();
     return isProfile;
@@ -39,9 +43,13 @@ export class ProfileService {
    */
   async create() {
     try {
+      let location = await this.geolocationService.getLocation();
       let profile = await this.createProfileModel();
-      let profileResponse = await this.profileAPI.create(profile);
-      this.local.create(profile);
+      let request = new CreateProfileRequest(profile, location);
+      let currentProfile = await this.profileAPI.create(request);
+
+      console.log(currentProfile);
+      this.local.create(currentProfile);
     } catch (e) {
       console.log(e);
     }

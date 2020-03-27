@@ -1,6 +1,6 @@
 export class LocationModel {
 
-  userId:number;
+  profileId:string;
   latitude:number;
   longitude:number;
 

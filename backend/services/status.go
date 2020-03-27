@@ -7,7 +7,7 @@ import (
 )
 
 type IStatus interface {
-	Create(userID, name string) (*entities.Status, error)
+	Create(userID,locationID, name string) (*entities.Status, error)
 }
 
 type Status struct {
@@ -20,6 +20,6 @@ func NewStatus(sql sql.Client) IStatus {
 	return &Status{sql:sql, repository:repository}
 }
 
-func (s *Status) Create(userID, name string ) (*entities.Status, error) {
-	return s.repository.Create(userID, name)
+func (s *Status) Create(userID, locationID, name string ) (*entities.Status, error) {
+	return s.repository.Create(userID, locationID,name)
 }
