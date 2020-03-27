@@ -2,8 +2,8 @@ package initializer
 
 import (
 	"github.com/jinzhu/gorm"
-	"radar/providers/sql"
 	"radar/entities"
+	"radar/providers/sql"
 )
 
 type Initializer struct {
@@ -17,4 +17,5 @@ func NewInitializer(client sql.Client) *Initializer {
 func (i *Initializer) CreateTables() {
 	i.db.CreateTable(&entities.Profile{})
 	i.db.CreateTable(&entities.Location{})
+	i.db.CreateTable(&entities.Status{})
 }

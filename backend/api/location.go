@@ -8,7 +8,7 @@ import (
 	"radar/providers/websocket"
 	"radar/services"
 
-	domainAdapters "radar/adapters/domain"
+	domainAdapters "radar/adapters/entities"
 )
 
 type LocationController struct {
@@ -39,18 +39,16 @@ func (c *LocationController) setupRoutes() {
 	c.r.GET("locations", c.GetLocations)
 }
 
-
 func (c *LocationController) GetLocations(ctx *gin.Context) {
 
-	connection, err  := websocket.Upgrade(ctx.Writer, ctx.Request)
+	connection, err := websocket.Upgrade(ctx.Writer, ctx.Request)
 
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, err)
 		return
 	}
 
-
-	location, err  := domainAdapters.GetLocation(ctx)
+	location, err := domainAdapters.GetLocation(ctx)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, err)
 		return
@@ -63,7 +61,6 @@ func (c *LocationController) GetLocations(ctx *gin.Context) {
 	registerChannel <- locationClient
 	go locationClient.Read()
 }
-
 
 func (c *LocationController) StartPool() {
 	go c.pool.Start()

@@ -3,8 +3,8 @@ package repositories
 import (
 	"fmt"
 	"github.com/jinzhu/gorm"
-	"radar/providers/sql"
 	"radar/entities"
+	"radar/providers/sql"
 )
 
 type IProfile interface {

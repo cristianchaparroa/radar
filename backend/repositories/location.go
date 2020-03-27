@@ -2,8 +2,8 @@ package repositories
 
 import (
 	"github.com/jinzhu/gorm"
-	"radar/providers/sql"
 	"radar/entities"
+	"radar/providers/sql"
 )
 
 type ILocation interface {

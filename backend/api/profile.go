@@ -3,20 +3,27 @@ package api
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"radar/providers/sql"
+	"radar/adapters/presenter"
 	"radar/entities"
+	"radar/providers/sql"
 	"radar/services"
 )
 
 type ProfileController struct {
 	r       *gin.RouterGroup
 	service services.IProfile
+	statusService services.IStatus
 }
 
 func NewProfileController(r *gin.RouterGroup, client sql.Client) *ProfileController {
 
 	service := services.NewProfile(client)
-	controller := &ProfileController{service: service, r: r}
+	statusService := services.NewStatus(client)
+
+	controller := &ProfileController{r: r,
+		service: service,
+		statusService:statusService}
+
 	return controller
 }
 
@@ -53,11 +60,18 @@ func (c *ProfileController) CreateProfile(ctx *gin.Context) {
 	}
 
 	p, err := c.service.Create(profile)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, err)
+		return
+	}
+
+	s, err :=c.statusService.Create(p.ID, entities.NegativeStatus)
 
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, err)
 		return
 	}
 
-	ctx.JSON(http.StatusOK, p)
+	response := presenter.NewProfileResponse(p, s)
+	ctx.JSON(http.StatusOK, response)
 }

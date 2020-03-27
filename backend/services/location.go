@@ -1,8 +1,8 @@
 package services
 
 import (
-	"radar/providers/sql"
 	"radar/entities"
+	"radar/providers/sql"
 	"radar/repositories"
 )
 

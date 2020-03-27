@@ -10,7 +10,7 @@ type ILocationPool interface {
 }
 
 type LocationPool struct {
-	ID string
+	ID               string
 	clients          map[ILocationClient]bool
 	broadcast        chan LocationMessage
 	registerClient   chan ILocationClient
@@ -60,12 +60,12 @@ func (p *LocationPool) broadcastMessage(m LocationMessage) []error {
 	return es
 }
 
-func (p *LocationPool) register(c ILocationClient) [] error {
+func (p *LocationPool) register(c ILocationClient) []error {
 	p.clients[c] = true
 
 	es := make([]error, 0)
 
-	for c:= range p.clients{
+	for c := range p.clients {
 
 		l := c.GetLocation()
 		m := NewLocationMessage(l.UserID, l.Latitude, l.Longitude)
@@ -79,14 +79,13 @@ func (p *LocationPool) register(c ILocationClient) [] error {
 	return es
 }
 
-func (p *LocationPool) unregister(c ILocationClient) []error{
+func (p *LocationPool) unregister(c ILocationClient) []error {
 	es := make([]error, 0)
 
 	delete(p.clients, c)
 
 	return es
 }
-
 
 func (p *LocationPool) GetRegisterChannel() chan ILocationClient {
 	return p.registerClient
