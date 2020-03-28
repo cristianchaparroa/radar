@@ -11,7 +11,7 @@ func MapLocationPresenterToEntity(location presenters.Location) entities.Locatio
 		ProfileID: location.ProfileID,
 		Latitude:  location.Latitude,
 		Longitude: location.Longitude,
-		CreateAt:  location.CreateAt,
+		CreateAt:  location.CreatedAt,
 		UpdatedAt: location.UpdatedAt,
 	}
 }

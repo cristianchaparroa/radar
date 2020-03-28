@@ -34,15 +34,20 @@ export class LocalProfileService {
    */
   async exist() {
     try {
-      let profile = await this.getProfile();
-      if (profile == null || profile.id == null) {
-        return false;
-      }
-      return true;
+      let currentProfile = await this.getProfile();
+      return !this.isNotValidCurrentProfile(currentProfile);
     } catch (e) {
       console.log(e);
       return false;
     }
     return false;
+  }
+
+  isNotValidCurrentProfile(currentProfile) {
+    return (
+      currentProfile == null ||
+      currentProfile.profile == null ||
+      currentProfile.profile.id == null
+    );
   }
 }

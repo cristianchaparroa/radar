@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ProfileService } from "../../services/profile.service";
+import { StatusesService } from "../../services/statuses.service";
+import { CurrentProfileModel } from "../../models/current-profile.model";
 
 @Component({
   selector: "app-profile",
@@ -7,43 +9,52 @@ import { ProfileService } from "../../services/profile.service";
   styleUrls: ["./profile.page.scss"]
 })
 export class ProfilePage implements OnInit {
-  private statuses = [
-    {
-      label: "Positivo",
-      value: "positive",
-      isChecked: false,
-      icon: "add-circle",
-      color: "danger"
-    },
-    {
-      label: "Negativo",
-      value: "negative",
-      isChecked: true,
-      icon: "thumbs-up",
-      color: "warning"
-    },
-    {
-      label: "Recuperado",
-      value: "recovered",
-      isChecked: false,
-      icon: "checkmark-circle",
-      color: "success"
-    }
-  ];
+  /**
+   * currentProfile contains the current profile
+   */
+  private currentProfile: CurrentProfileModel;
 
-  constructor(private profileService: ProfileService) {}
+  /**
+   * This is the index of the status options selected
+   */
+  private selectedStatusIndex = 1;
+
+  /**
+   * This is the status options showed.
+   */
+  private statuses = [];
+
+  constructor(
+    private profileService: ProfileService,
+    private statusesService: StatusesService
+  ) {}
 
   async ngOnInit() {
-    this.profileService.init();
+    // Fill the status options
+    this.statuses = this.statusesService.getStatuses();
+
+    // Load the current profile
+    this.currentProfile = await this.profileService.init();
+    console.log(this.currentProfile);
+
+    // retrieve the current satus name
+    let statusName = this.currentProfile.status.name;
+
+    // set the option selected
+    this.selectedStatusIndex = this.statusesService.getIndexSelectedByName(
+      statusName
+    );
   }
 
-  isProfile() {}
-
-  changeStatus(status) {
-    for (let s of this.statuses) {
-      if (s.value !== status) {
-        s.isChecked = false;
-      }
+  /**
+   * function triggered when is changed the status
+   */
+  changeStatus(event, statusName) {
+    let isChecked = event.detail.checked;
+    if (isChecked) {
+      console.log(this.currentProfile);
+      let profileId = this.currentProfile.profile.id;
+      this.statusesService.create(profileId,statusName);
     }
   }
 }

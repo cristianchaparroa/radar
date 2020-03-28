@@ -8,7 +8,7 @@ export class CreateProfileRequest {
   constructor(profile: ProfileModel, location: LocationModel) {
     this.profile = profile;
     this.location = location;
-    this.location.profileId = this.profile.id;
+    this.location.profileID = this.profile.id;
   }
 
   JSON() {

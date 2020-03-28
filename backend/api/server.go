@@ -22,6 +22,7 @@ type RadarServer struct {
 
 	pc *ProfileController
 	lc *LocationController
+	sc *StatusController
 }
 
 func NewRadarServer() IRadarServer {
@@ -71,6 +72,9 @@ func (s *RadarServer) setupRoutes() {
 
 	s.lc = NewLocationController(ws, s.sql)
 	s.lc.Setup()
+
+	s.sc = NewStatusController(server, s.sql)
+	s.sc.Setup()
 }
 
 func (s *RadarServer) Run() {

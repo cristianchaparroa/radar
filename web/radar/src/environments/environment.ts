@@ -5,3 +5,4 @@ export const environment = {
 
 export const API_URL = 'http://localhost:8080';
 export const PROFILES_ENDPOINT = API_URL + '/v1/profiles/';
+export const STATUSES_ENDPOINT = API_URL + '/v1/statuses/';

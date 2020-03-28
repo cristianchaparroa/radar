@@ -15,8 +15,8 @@ export class ProfileModel {
 
 export function NewProfilefromJSON(json: any) {
   let id = json.profile.id;
-  let deviceID = json.profile.device_id;
-  let createdAt = json.profile.created_at;
+  let deviceID = json.profile.deviceID;
+  let createdAt = json.profile.createdAt;
   let model = new ProfileModel(id, deviceID);
   model.createdAt = createdAt;
   return model;

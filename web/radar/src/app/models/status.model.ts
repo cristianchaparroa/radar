@@ -4,7 +4,8 @@ export class StatusModel {
   name: string;
   createdAt: any;
 
-  constructor(id: string, profileID: string, name: string, createdAt: any) {
+
+  constructor(id?:string, profileID?: string, name?: string, createdAt?: any) {
     this.id = id;
     this.profileID = profileID;
     this.name = name;

@@ -9,7 +9,7 @@ import (
 )
 
 type ILocation interface {
-	RegisterLocation(l entities.Location)  (entities.Location, error)
+	RegisterLocation(l entities.Location) (entities.Location, error)
 }
 
 type Location struct {
@@ -19,16 +19,16 @@ type Location struct {
 
 func NewLocation(client sql.Client) ILocation {
 	service := repositories.NewLocation(client)
-	return &Location{sql: client, locationRepository:service}
+	return &Location{sql: client, locationRepository: service}
 
 }
 
 func (s *Location) RegisterLocation(l entities.Location) (entities.Location, error) {
 
 	t := time.Now()
-	l.UpdatedAt = t;
-	l.CreateAt = t;
+	l.UpdatedAt = t
+	l.CreateAt = t
 	l.ID = uuid.New().String()
 
-	return  l, s.locationRepository.RegisterLocation(l)
+	return l, s.locationRepository.RegisterLocation(l)
 }

@@ -27,8 +27,12 @@ export class ProfileService {
   async init() {
     let isProfile = await this.exist();
     if (!isProfile) {
-      this.create();
+      let profile = await this.create();
+      return profile;
     }
+
+    let profile = await this.local.getProfile();
+    return profile;
   }
 
   /**

@@ -5,22 +5,21 @@ import (
 	"radar/presenters"
 )
 
-func NewProfileResponse(profile entities.Profile, status *entities.Status) presenters.ProfileResponse{
+func NewProfileResponse(profile entities.Profile, status *entities.Status) presenters.ProfileResponse {
 
 	return presenters.ProfileResponse{
 
 		Profile: presenters.Profile{
-			ID:profile.ID,
-			DeviceID:profile.DeviceID,
-			CreatedAt:profile.CreatedAt,
+			ID:        profile.ID,
+			DeviceID:  profile.DeviceID,
+			CreatedAt: profile.CreatedAt,
 		},
-		Status:  presenters.Status{
-			ID : status.ID,
-			ProfileID:profile.ID,
-			Name: status.Name,
-			CreatedAt:status.CreatedAt,
+		Status: presenters.Status{
+			ID:        status.ID,
+			ProfileID: profile.ID,
+			Name:      status.Name,
+			CreatedAt: status.CreatedAt,
 		},
-
 	}
 }
 

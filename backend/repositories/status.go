@@ -19,7 +19,7 @@ func NewStatus(sql sql.Client) IStatus {
 }
 
 func (r *Status) Create(userID, locationID, status string) (*entities.Status, error) {
-	s := entities.NewStatus(userID,locationID, status)
+	s := entities.NewStatus(userID, locationID, status)
 	err := r.db.Save(&s).Error
 	return s, err
 }

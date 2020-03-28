@@ -11,9 +11,9 @@ import (
 )
 
 type ProfileController struct {
-	r       *gin.RouterGroup
-	service services.IProfile
-	statusService services.IStatus
+	r               *gin.RouterGroup
+	service         services.IProfile
+	statusService   services.IStatus
 	locationService services.ILocation
 }
 
@@ -24,9 +24,9 @@ func NewProfileController(r *gin.RouterGroup, client sql.Client) *ProfileControl
 	locationService := services.NewLocation(client)
 
 	controller := &ProfileController{r: r,
-		service: service,
-		statusService:statusService,
-		locationService:locationService,
+		service:         service,
+		statusService:   statusService,
+		locationService: locationService,
 	}
 
 	return controller
@@ -57,7 +57,6 @@ func (c *ProfileController) CreateProfile(ctx *gin.Context) {
 
 	var profileRequest presenters.CreateProfileRequest
 
-
 	err := ctx.BindJSON(&profileRequest)
 
 	if err != nil {
@@ -79,7 +78,7 @@ func (c *ProfileController) CreateProfile(ctx *gin.Context) {
 		return
 	}
 
-	s, err :=c.statusService.Create(p.ID,l.ID, entities.NegativeStatus)
+	s, err := c.statusService.Create(p.ID, l.ID, entities.NegativeStatus)
 
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, err)

@@ -15,11 +15,11 @@
   </ion-card>
 
   <ion-list>
-    <ion-card *ngFor="let status of statuses">
+    <ion-card *ngFor="let status of statuses; let i=index">
       <ion-item [color]="status.color">
         <ion-label>{{status.label}}</ion-label>
         <ion-icon slot="start" [name]="status.icon"></ion-icon>
-        <ion-checkbox (ionChange)="changeStatus(status.value)" [(ngModel)]="status.isChecked"></ion-checkbox>
+        <ion-checkbox (ionChange)="changeStatus($event,status.value)" item-right [ngModel]="selectedStatusIndex == i"(ngModelChange)="$event ? selectedStatusIndex = i : selectedStatusIndex = -1" [disabled]="selectedStatusIndex >= 0 && selectedStatusIndex != i"></ion-checkbox>
       </ion-item>
     </ion-card>
   </ion-list>
