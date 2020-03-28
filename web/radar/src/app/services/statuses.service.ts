@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
 import { GeolocationService } from "./geolocation.service";
-import { LocalProfileService } from "./local-profile.service";
+import { LocalStatusService } from "./local-status.service";
 
 import { StatusModel } from "../models/status.model";
-import {StatusesApiService} from "../api/statuses-api.service";
-import {CreateStatusRequest} from "../api/request/create-status.request";
+import { StatusesApiService } from "../api/statuses-api.service";
+import { CreateStatusRequest } from "../api/request/create-status.request";
 
 @Injectable({
   providedIn: "root"
@@ -39,8 +39,8 @@ export class StatusesService {
 
   constructor(
     private geolocationService: GeolocationService,
-    private local: LocalProfileService,
-    private statusesApiService:StatusesApiService
+    private local: LocalStatusService,
+    private statusesApiService: StatusesApiService
   ) {}
 
   getStatuses() {
@@ -56,12 +56,13 @@ export class StatusesService {
     return -1;
   }
 
-  async create(profileId,statusName) {
+  async create(profileId, statusName) {
     let location = await this.geolocationService.getLocation();
-    let status = this.createStatus(profileId,statusName);
+    let status = this.createStatus(profileId, statusName);
     let request = new CreateStatusRequest(status, location);
-    let response = this.statusesApiService.create(request);
-    console.log(response);
+    let statusResponse = await this.statusesApiService.create(request);
+    let currentProfile = await this.local.updateStatus(statusResponse);
+    return currentProfile;
   }
 
   createStatus(profileId, statusName) {
@@ -70,5 +71,4 @@ export class StatusesService {
     status.name = statusName;
     return status;
   }
-
 }

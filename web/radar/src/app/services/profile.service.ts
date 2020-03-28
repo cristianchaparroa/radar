@@ -51,9 +51,8 @@ export class ProfileService {
       let profile = await this.createProfileModel();
       let request = new CreateProfileRequest(profile, location);
       let currentProfile = await this.profileAPI.create(request);
-
-      console.log(currentProfile);
       this.local.create(currentProfile);
+      return currentProfile;
     } catch (e) {
       console.log(e);
     }

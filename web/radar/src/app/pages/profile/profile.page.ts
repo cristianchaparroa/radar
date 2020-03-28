@@ -35,7 +35,6 @@ export class ProfilePage implements OnInit {
 
     // Load the current profile
     this.currentProfile = await this.profileService.init();
-    console.log(this.currentProfile);
 
     // retrieve the current satus name
     let statusName = this.currentProfile.status.name;
@@ -49,12 +48,15 @@ export class ProfilePage implements OnInit {
   /**
    * function triggered when is changed the status
    */
-  changeStatus(event, statusName) {
+  async changeStatus(event, statusName) {
     let isChecked = event.detail.checked;
     if (isChecked) {
       console.log(this.currentProfile);
       let profileId = this.currentProfile.profile.id;
-      this.statusesService.create(profileId,statusName);
+      this.currentProfile = await this.statusesService.create(
+        profileId,
+        statusName
+      );
     }
   }
 }
