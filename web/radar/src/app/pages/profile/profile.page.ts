@@ -1,4 +1,6 @@
 import { Component, OnInit } from "@angular/core";
+import { ToastController } from "@ionic/angular";
+
 import { ProfileService } from "../../services/profile.service";
 import { StatusesService } from "../../services/statuses.service";
 import { CurrentProfileModel } from "../../models/current-profile.model";
@@ -25,6 +27,7 @@ export class ProfilePage implements OnInit {
   private statuses = [];
 
   constructor(
+    public toastController: ToastController,
     private profileService: ProfileService,
     private statusesService: StatusesService
   ) {}
@@ -57,6 +60,19 @@ export class ProfilePage implements OnInit {
         profileId,
         statusName
       );
+
+      await this.showUpdateMessage();
     }
+  }
+
+  async showUpdateMessage() {
+    const toast = await this.toastController.create({
+      
+      icon: 'star',
+      color:'light',
+      message: "El estado ha sido actualizado",
+      duration: 2000
+    });
+    toast.present();
   }
 }
