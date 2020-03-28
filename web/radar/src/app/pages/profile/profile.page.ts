@@ -67,9 +67,8 @@ export class ProfilePage implements OnInit {
 
   async showUpdateMessage() {
     const toast = await this.toastController.create({
-      
-      icon: 'star',
-      color:'light',
+      icon: "star",
+      color: "light",
       message: "El estado ha sido actualizado",
       duration: 2000
     });
