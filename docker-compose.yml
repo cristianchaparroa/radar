@@ -1,0 +1,29 @@
+
+version: "3"
+services:
+  postgres:
+    restart: always
+    image: sameersbn/postgresql:9.5-3
+    ports:
+      - "5432:5432"
+    environment:
+      - DEBUG=false
+      - DB_USER=radar
+      - DB_PASS=radar
+      - DB_NAME=radar
+
+  backend:
+
+    build:  ./backend
+    ports:
+      - "8080:8080"
+    links:
+        - postgres:postgres
+    depends_on:
+      - postgres
+    environment:
+      - DEBUG=false
+      - USER_DB=radar
+      - PASSWORD_DB=radar
+      - NAME_DB=radar
+      - HOST_DB=postgres:5432
