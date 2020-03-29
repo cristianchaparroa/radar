@@ -1,13 +1,15 @@
 package api
 
 import (
+	"fmt"
+	"radar/initializer"
+	"radar/providers/sql"
+	"time"
+
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/zap"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
-	"radar/initializer"
-	"radar/providers/sql"
-	"time"
 )
 
 type IRadarServer interface {
@@ -20,9 +22,10 @@ type RadarServer struct {
 	sql    sql.Client
 	engine *gin.Engine
 
-	pc *ProfileController
-	lc *LocationController
-	sc *StatusController
+	pc     *ProfileController
+	lc     *LocationController
+	sc     *StatusController
+	logger *zap.Logger
 }
 
 func NewRadarServer() IRadarServer {
@@ -51,6 +54,7 @@ func (s *RadarServer) setupDB() {
 	client, err := sql.NewPostgresClient()
 
 	if err != nil {
+		fmt.Println(err)
 		panic(err)
 	}
 
