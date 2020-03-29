@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ToastController } from "@ionic/angular";
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 
 import { ProfileService } from "../../services/profile.service";
 import { StatusesService } from "../../services/statuses.service";
@@ -29,10 +30,13 @@ export class ProfilePage implements OnInit {
   constructor(
     public toastController: ToastController,
     private profileService: ProfileService,
-    private statusesService: StatusesService
+    private statusesService: StatusesService,
+    private backgroundMode: BackgroundMode
   ) {}
 
   async ngOnInit() {
+    
+    this.backgroundMode.enable();
     // Fill the status options
     this.statuses = this.statusesService.getStatuses();
 
