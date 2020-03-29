@@ -27,3 +27,4 @@ services:
       - PASSWORD_DB=radar
       - NAME_DB=radar
       - HOST_DB=postgres:5432
+    restart: always
