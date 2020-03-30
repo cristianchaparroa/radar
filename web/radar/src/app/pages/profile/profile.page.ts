@@ -5,6 +5,7 @@ import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 import { ProfileService } from "../../services/profile.service";
 import { StatusesService } from "../../services/statuses.service";
 import { CurrentProfileModel } from "../../models/current-profile.model";
+import { TrackerService} from "../../services/tracker.service";
 
 @Component({
   selector: "app-profile",
@@ -31,11 +32,12 @@ export class ProfilePage implements OnInit {
     public toastController: ToastController,
     private profileService: ProfileService,
     private statusesService: StatusesService,
-    private backgroundMode: BackgroundMode
+    private backgroundMode: BackgroundMode,
+    private tracker:TrackerService
   ) {}
 
   async ngOnInit() {
-    
+
     this.backgroundMode.enable();
     // Fill the status options
     this.statuses = this.statusesService.getStatuses();
@@ -77,4 +79,13 @@ export class ProfilePage implements OnInit {
     });
     toast.present();
   }
+
+  initTracking() {
+      this.tracker.start();
+  }
+
+  stopTracking() {
+    this.tracker.stop();
+  }
+
 }
