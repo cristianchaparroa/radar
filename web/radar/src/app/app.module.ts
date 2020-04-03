@@ -13,6 +13,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { UniqueDeviceID } from "@ionic-native/unique-device-id/ngx";
 import { BackgroundGeolocation } from "@ionic-native/background-geolocation/ngx";
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+import {TrackerService} from './services/tracker.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,6 +32,7 @@ import { BackgroundMode } from '@ionic-native/background-mode/ngx';
     UniqueDeviceID,
     BackgroundMode,
     BackgroundGeolocation,
+    TrackerService,
   ],
   bootstrap: [AppComponent]
 })

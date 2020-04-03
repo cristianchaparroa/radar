@@ -36,15 +36,16 @@ export class TrackerService {
   }
 
   startMobileTracking() {
+
+    console.log("--> StartMobileTracking");
     let config = this.getConfiguration();
-
-
-
 
     this.backgroundGeolocation.configure(config).then(() => {
       this.backgroundGeolocation
         .on(BackgroundGeolocationEvents.location)
         .subscribe((location: BackgroundGeolocationResponse) => {
+          console.log("--> Location");
+          console.log(location);
           this.sendLocation(location);
 
           // IMPORTANT:  You must execute the finish method here to inform the native plugin that you're finished,
@@ -56,11 +57,13 @@ export class TrackerService {
 
 
     // start recording location
+    console.log("--> this.backgroundGeolocation.start()");
     this.backgroundGeolocation.start();
   }
 
   getConfiguration() {
     const config: BackgroundGeolocationConfig = {
+      interval: 1000,
       desiredAccuracy: 10,
       stationaryRadius: 20,
       distanceFilter: 30,
@@ -71,11 +74,13 @@ export class TrackerService {
   }
 
   async sendLocation(position) {
+
     let current = await this.local.getProfile();
     let profile = current.profile;
     let location = new LocationModel(position.latitude, position.longitude);
     location.profileID = profile.id;
-    this.locationApi.register(location);
+    await this.locationApi.register(location);
+    console.log("--> sendLocation", position.latitude, position.longitude);
   }
 
   stop() {

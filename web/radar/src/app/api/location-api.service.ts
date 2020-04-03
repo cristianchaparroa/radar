@@ -28,6 +28,7 @@ export class LocationApiService {
   }
 
   async register(location:LocationModel) {
+    console.log("--> LocationApiService.register");
     let response = await this.post(location);
     console.log(response);
   }

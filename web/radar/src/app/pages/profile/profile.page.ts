@@ -78,6 +78,7 @@ export class ProfilePage implements OnInit {
 
 
   changeTracking(event) {
+    console.log(event);
     let isAllowedTracking = event.detail.checked;
     if (isAllowedTracking) {
       console.log("Tracking enabled");

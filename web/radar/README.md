@@ -1,5 +1,8 @@
 # Radar
 
+#plugins :
+
+https://ionicframework.com/docs/native/background-geolocation
 
 ## Known issues
 

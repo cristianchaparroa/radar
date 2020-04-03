@@ -9,8 +9,21 @@
 <ion-content [fullscreen]="true">
   <ion-card>
     <ion-card-content>
-      La información que estas compartiendo es completamente anónima. ¿Cuál es
-      tu estado actual referente a COVID-19?
+      Activa el tracking para registrar tu ubicacion de forma anómnima.
+    </ion-card-content>
+  </ion-card>
+
+
+  <ion-card >
+    <ion-item color="tertiary">
+      <ion-label>Activa el tracking</ion-label>
+      <ion-toggle  color="success" (ionChange)="changeTracking($event)" [(ngModel)]="isTracking"></ion-toggle>
+    </ion-item>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+      ¿Cuál es tu estado actual referente a COVID-19?
     </ion-card-content>
   </ion-card>
 
@@ -23,19 +36,6 @@
       </ion-item>
     </ion-card>
   </ion-list>
+
+
 </ion-content>
-
-
-<ion-item mode="ios">
-  <ion-label text-center>Activar tracking</ion-label>
-  <ion-checkbox mode="ios" slot="start" (ionChange)="changeTracking($event)" [(ngModel)]="isTracking"></ion-checkbox>
-</ion-item>
-
-
-<ion-footer>
-
-
-
-
-
-</ion-footer>
