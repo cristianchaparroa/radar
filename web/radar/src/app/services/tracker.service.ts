@@ -35,7 +35,7 @@ export class TrackerService {
     this.startMobileTracking();
   }
 
-  startMobileTracking() {
+  async startMobileTracking() {
 
     console.log("--> StartMobileTracking");
     let config = this.getConfiguration();
