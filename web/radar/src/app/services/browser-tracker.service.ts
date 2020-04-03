@@ -13,6 +13,8 @@ export class BrowserTrackerService {
 
   async isWebPlatform() {
     let info = await Device.getInfo();
+
+    console.log(info);
     return info.platform == this.WebPlatform;
   }
 }

@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title text-center>
-      Perfil
+      Covid Radar
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -15,8 +15,8 @@
   </ion-card>
 
   <ion-list>
-    <ion-card *ngFor="let status of statuses; let i=index">
-      <ion-item [color]="status.color">
+    <ion-card mode="ios" *ngFor="let status of statuses; let i=index">
+      <ion-item  mode="ios"  [color]="status.color">
         <ion-label>{{status.label}}</ion-label>
         <ion-icon slot="start" [name]="status.icon"></ion-icon>
         <ion-checkbox (ionChange)="changeStatus($event,status.value)" item-right [ngModel]="selectedStatusIndex == i"(ngModelChange)="$event ? selectedStatusIndex = i : selectedStatusIndex = -1" [disabled]="selectedStatusIndex >= 0 && selectedStatusIndex != i"></ion-checkbox>
@@ -24,3 +24,18 @@
     </ion-card>
   </ion-list>
 </ion-content>
+
+
+<ion-item mode="ios">
+  <ion-label text-center>Activar tracking</ion-label>
+  <ion-checkbox mode="ios" slot="start" (ionChange)="changeTracking($event)" [(ngModel)]="isTracking"></ion-checkbox>
+</ion-item>
+
+
+<ion-footer>
+
+
+
+
+
+</ion-footer>

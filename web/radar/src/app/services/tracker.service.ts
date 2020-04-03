@@ -23,13 +23,14 @@ export class TrackerService {
   ) {}
 
   async start() {
-    let isWeb = this.webTracker.isWebPlatform();
+    /*
+    let isWeb = await this.webTracker.isWebPlatform();
     if (isWeb) {
       console.log(
         "Is web application. The web tracking is not implement yet!."
       );
       return;
-    }
+    }*/
 
     this.startMobileTracking();
   }
@@ -55,7 +56,7 @@ export class TrackerService {
 
 
     // start recording location
-    //this.backgroundGeolocation.start();
+    this.backgroundGeolocation.start();
   }
 
   getConfiguration() {

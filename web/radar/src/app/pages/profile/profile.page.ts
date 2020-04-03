@@ -13,6 +13,11 @@ import { TrackerService} from "../../services/tracker.service";
   styleUrls: ["./profile.page.scss"]
 })
 export class ProfilePage implements OnInit {
+
+  /**
+   * Identifies if the tracking is enable;
+  */
+  private isTracking:boolean;
   /**
    * currentProfile contains the current profile
    */
@@ -67,7 +72,19 @@ export class ProfilePage implements OnInit {
         statusName
       );
 
-      await this.showUpdateMessage();
+       this.showUpdateMessage();
+    }
+  }
+
+
+  changeTracking(event) {
+    let isAllowedTracking = event.detail.checked;
+    if (isAllowedTracking) {
+      console.log("Tracking enabled");
+      this.initTracking();
+    } else {
+      console.log("Tracking disabled");
+      this.stopTracking();
     }
   }
 

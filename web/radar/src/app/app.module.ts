@@ -12,6 +12,7 @@ import { Geolocation } from "@ionic-native/geolocation/ngx";
 import { HttpClientModule } from "@angular/common/http";
 import { UniqueDeviceID } from "@ionic-native/unique-device-id/ngx";
 import { BackgroundGeolocation } from "@ionic-native/background-geolocation/ngx";
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,7 +29,8 @@ import { BackgroundGeolocation } from "@ionic-native/background-geolocation/ngx"
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     Geolocation,
     UniqueDeviceID,
-    BackgroundGeolocation
+    BackgroundMode,
+    BackgroundGeolocation,
   ],
   bootstrap: [AppComponent]
 })
