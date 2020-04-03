@@ -1,5 +1,9 @@
 # Radar
 
+### Geolocation Documentation:
+
+https://ionicframework.com/docs/native/background-geolocation
+https://github.com/ionic-team/ionic-native/issues/2893
 
 ## Known issues
 

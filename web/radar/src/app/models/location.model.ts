@@ -8,4 +8,7 @@ export class LocationModel {
     this.latitude = lat;
     this.longitude = lng;
   }
+  JSON() {
+    return JSON.stringify(this);
+  }
 }

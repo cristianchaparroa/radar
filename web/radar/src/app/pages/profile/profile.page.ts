@@ -1,9 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { ToastController } from "@ionic/angular";
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 
 import { ProfileService } from "../../services/profile.service";
 import { StatusesService } from "../../services/statuses.service";
 import { CurrentProfileModel } from "../../models/current-profile.model";
+import { TrackerService} from "../../services/tracker.service";
 
 @Component({
   selector: "app-profile",
@@ -11,6 +13,11 @@ import { CurrentProfileModel } from "../../models/current-profile.model";
   styleUrls: ["./profile.page.scss"]
 })
 export class ProfilePage implements OnInit {
+
+  /**
+   * Identifies if the tracking is enable;
+  */
+  private isTracking:boolean;
   /**
    * currentProfile contains the current profile
    */
@@ -29,10 +36,14 @@ export class ProfilePage implements OnInit {
   constructor(
     public toastController: ToastController,
     private profileService: ProfileService,
-    private statusesService: StatusesService
+    private statusesService: StatusesService,
+    private backgroundMode: BackgroundMode,
+    private tracker:TrackerService
   ) {}
 
   async ngOnInit() {
+
+    this.backgroundMode.enable();
     // Fill the status options
     this.statuses = this.statusesService.getStatuses();
 
@@ -61,7 +72,20 @@ export class ProfilePage implements OnInit {
         statusName
       );
 
-      await this.showUpdateMessage();
+       this.showUpdateMessage();
+    }
+  }
+
+
+  changeTracking(event) {
+    console.log(event);
+    let isAllowedTracking = event.detail.checked;
+    if (isAllowedTracking) {
+      console.log("Tracking enabled");
+      this.initTracking();
+    } else {
+      console.log("Tracking disabled");
+      this.stopTracking();
     }
   }
 
@@ -73,4 +97,13 @@ export class ProfilePage implements OnInit {
     });
     toast.present();
   }
+
+  initTracking() {
+      this.tracker.start();
+  }
+
+  stopTracking() {
+    this.tracker.stop();
+  }
+
 }

@@ -11,6 +11,9 @@ import { AppComponent } from "./app.component";
 import { Geolocation } from "@ionic-native/geolocation/ngx";
 import { HttpClientModule } from "@angular/common/http";
 import { UniqueDeviceID } from "@ionic-native/unique-device-id/ngx";
+import { BackgroundGeolocation } from "@ionic-native/background-geolocation/ngx";
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+import {TrackerService} from './services/tracker.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,7 +29,10 @@ import { UniqueDeviceID } from "@ionic-native/unique-device-id/ngx";
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     Geolocation,
-    UniqueDeviceID
+    UniqueDeviceID,
+    BackgroundMode,
+    BackgroundGeolocation,
+    TrackerService,
   ],
   bootstrap: [AppComponent]
 })

@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title text-center>
-      Perfil
+      Covid Radar
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,18 +9,33 @@
 <ion-content [fullscreen]="true">
   <ion-card>
     <ion-card-content>
-      La información que estas compartiendo es completamente anónima. ¿Cuál es
-      tu estado actual referente a COVID-19?
+      Activa el tracking para registrar tu ubicacion de forma anómnima.
+    </ion-card-content>
+  </ion-card>
+
+
+  <ion-card >
+    <ion-item color="tertiary">
+      <ion-label>Activa el tracking</ion-label>
+      <ion-toggle  color="success" (ionChange)="changeTracking($event)" [(ngModel)]="isTracking"></ion-toggle>
+    </ion-item>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+      ¿Cuál es tu estado actual referente a COVID-19?
     </ion-card-content>
   </ion-card>
 
   <ion-list>
-    <ion-card *ngFor="let status of statuses; let i=index">
-      <ion-item [color]="status.color">
+    <ion-card mode="ios" *ngFor="let status of statuses; let i=index">
+      <ion-item  mode="ios"  [color]="status.color">
         <ion-label>{{status.label}}</ion-label>
         <ion-icon slot="start" [name]="status.icon"></ion-icon>
         <ion-checkbox (ionChange)="changeStatus($event,status.value)" item-right [ngModel]="selectedStatusIndex == i"(ngModelChange)="$event ? selectedStatusIndex = i : selectedStatusIndex = -1" [disabled]="selectedStatusIndex >= 0 && selectedStatusIndex != i"></ion-checkbox>
       </ion-item>
     </ion-card>
   </ion-list>
+
+
 </ion-content>
