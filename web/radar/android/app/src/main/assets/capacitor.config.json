@@ -1,6 +1,6 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "radar",
+  "appId": "org.radar19",
+  "appName": "Radar",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",

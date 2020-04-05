@@ -40,21 +40,11 @@ export class TrackerService {
     console.log("--> StartMobileTracking");
     let config = this.getConfiguration();
 
-    this.backgroundGeolocation.configure(config).then(() => {
-      this.backgroundGeolocation
-        .on(BackgroundGeolocationEvents.location)
-        .subscribe((location: BackgroundGeolocationResponse) => {
-          console.log("--> Location");
-          console.log(location);
-          this.sendLocation(location);
+    if (config == null) {
+      return;
+    }
 
-          // IMPORTANT:  You must execute the finish method here to inform the native plugin that you're finished,
-          // and the background-task may be completed.  You must do this regardless if your operations are successful or not.
-          // IF YOU DON'T, ios will CRASH YOUR APP for spending too much time in the background.
-          this.backgroundGeolocation.finish(); // FOR IOS ONLY
-        });
-    });
-
+    this.setupBackground(config);
 
     // start recording location
     console.log("--> this.backgroundGeolocation.start()");
@@ -62,15 +52,36 @@ export class TrackerService {
   }
 
   getConfiguration() {
-    const config: BackgroundGeolocationConfig = {
-      interval: 1000,
-      desiredAccuracy: 10,
-      stationaryRadius: 20,
-      distanceFilter: 30,
-      debug: true, //  enable this hear sounds for background-geolocation life-cycle.
-      stopOnTerminate: false // enable this to clear background location settings when the app terminates
-    };
-    return config;
+
+    try {
+      const config: BackgroundGeolocationConfig = {
+        interval: 1000,
+        desiredAccuracy: 10,
+        stationaryRadius: 20,
+        distanceFilter: 30,
+        debug: true, //  enable this hear sounds for background-geolocation life-cycle.
+        stopOnTerminate: false // enable this to clear background location settings when the app terminates
+      };
+      return config;
+    } catch(e) {
+        console.log("--> Error trying to getConfiguration: ", e)
+    }
+
+    return null;
+  }
+
+  async setupBackground(config) {
+
+    this.backgroundGeolocation.configure(config).then(() => {
+      this.backgroundGeolocation
+        .on(BackgroundGeolocationEvents.location)
+        .subscribe((location: BackgroundGeolocationResponse) => {
+          console.log("--> Location");
+          console.log(location);
+          this.sendLocation(location);
+          this.backgroundGeolocation.finish();
+        });
+    });
   }
 
   async sendLocation(position) {

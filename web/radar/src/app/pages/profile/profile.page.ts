@@ -1,11 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { ToastController } from "@ionic/angular";
-import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+import { BackgroundMode } from "@ionic-native/background-mode/ngx";
 
 import { ProfileService } from "../../services/profile.service";
 import { StatusesService } from "../../services/statuses.service";
 import { CurrentProfileModel } from "../../models/current-profile.model";
-import { TrackerService} from "../../services/tracker.service";
+import { TrackerService } from "../../services/tracker.service";
 
 @Component({
   selector: "app-profile",
@@ -13,11 +13,10 @@ import { TrackerService} from "../../services/tracker.service";
   styleUrls: ["./profile.page.scss"]
 })
 export class ProfilePage implements OnInit {
-
   /**
    * Identifies if the tracking is enable;
-  */
-  private isTracking:boolean;
+   */
+  private isTracking: boolean;
   /**
    * currentProfile contains the current profile
    */
@@ -38,19 +37,31 @@ export class ProfilePage implements OnInit {
     private profileService: ProfileService,
     private statusesService: StatusesService,
     private backgroundMode: BackgroundMode,
-    private tracker:TrackerService
+    private tracker: TrackerService
   ) {}
 
   async ngOnInit() {
-
     this.backgroundMode.enable();
     // Fill the status options
     this.statuses = this.statusesService.getStatuses();
 
     // Load the current profile
     this.currentProfile = await this.profileService.init();
-
+    console.log(this.currentProfile);
     // retrieve the current satus name
+    await this.updateStatus();
+  }
+
+  async updateStatus() {
+    console.log("--> updateStatus");
+
+    if (this.currentProfile == null) {
+      return;
+    }
+
+    if (this.currentProfile.status == null) {
+      return;
+    }
     let statusName = this.currentProfile.status.name;
 
     // set the option selected
@@ -72,19 +83,18 @@ export class ProfilePage implements OnInit {
         statusName
       );
 
-       this.showUpdateMessage();
+      this.showUpdateMessage();
     }
   }
-
 
   changeTracking(event) {
     console.log(event);
     let isAllowedTracking = event.detail.checked;
     if (isAllowedTracking) {
-      console.log("Tracking enabled");
+      console.log("--> Tracking enabled");
       this.initTracking();
     } else {
-      console.log("Tracking disabled");
+      console.log("--> Tracking disabled");
       this.stopTracking();
     }
   }
@@ -99,11 +109,10 @@ export class ProfilePage implements OnInit {
   }
 
   initTracking() {
-      this.tracker.start();
+    this.tracker.start();
   }
 
   stopTracking() {
     this.tracker.stop();
   }
-
 }

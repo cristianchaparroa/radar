@@ -1,5 +1,6 @@
 # Radar
 
+
 ## 1. Local Deployment
 
 ### Install dependences
@@ -9,8 +10,29 @@ chmod +x ./bin/install.sh
 ./bin/install.sh
 ```
 
+### IOS environment
 
-## 2. Documentation
+Install Ruby virtual env
+```
+curl -L https://get.rvm.io | bash -s stable
+Re-open the terminal
+
+chmod +x ./bin/install_ruby_virtual_env.sh
+./bin/install_ruby_virtual_env.sh
+```
+
+## 2. Configuration
+
+### IOS
+
+### Sign up the application.
+
+### Enable Background modes for location:
+Project setting -> Target -> Capabilities -> Background modes ->
+  check Location updates.
+  check 
+
+## 3. Documentation
 ### Background geolocation:
 
 The following are resources according with the Ionic Background geolocation
@@ -18,7 +40,7 @@ The following are resources according with the Ionic Background geolocation
 https://ionicframework.com/docs/native/background-geolocation
 https://github.com/ionic-team/ionic-native/issues/2893
 
-## 3. Known issues
+## 4. Known issues
 
 ### Proposal-numeric-separator
 

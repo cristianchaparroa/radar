@@ -25,6 +25,7 @@ export class ProfileService {
    * create a new.
    */
   async init() {
+    console.log("--> profile.service.init");
     let isProfile = await this.exist();
     if (!isProfile) {
       let profile = await this.create();
