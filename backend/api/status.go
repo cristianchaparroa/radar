@@ -3,7 +3,7 @@ package api
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"radar/adapters/presenter"
+	"radar/adapters"
 	"radar/presenters"
 	"radar/providers/sql"
 	"radar/services"
@@ -11,7 +11,7 @@ import (
 
 type StatusController struct {
 	r *gin.RouterGroup
-	service services.IStatus
+	service services.Status
 	locationService services.ILocation
 }
 
@@ -47,22 +47,14 @@ func (c *StatusController) Create(ctx *gin.Context) {
 		return
 	}
 
-	location := presenter.MapLocationPresenterToEntity(request.Location)
-
-	l, err := c.locationService.RegisterLocation(location)
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, err)
-		return
-	}
-
-
-	s, err := c.service.Create(request.Status.ProfileID, l.ID, request.Status.Name)
+	location := adapters.MapLocationPresenterToDomain(request.Location)
+	s, err := c.service.Create(location,request.Status.Name)
 
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, err)
 		return
 	}
 
-	response := presenter.MapCreateStatusEntityToPresenter(*s,l)
+	response := adapters.MapCreateStatusDomainToPresenter(*s, location)
 	ctx.JSON(http.StatusOK, response)
 }

@@ -3,13 +3,13 @@ package pools
 import (
 	"fmt"
 	"github.com/google/uuid"
-	"radar/entities"
+	"radar/domain"
 	"radar/providers/websocket"
 )
 
 type ILocationClient interface {
 	Read()
-	GetLocation() *entities.Location
+	GetLocation() *domain.Location
 	PublishMessage(m interface{}) error
 }
 
@@ -17,10 +17,10 @@ type LocationClient struct {
 	ID         string
 	connection websocket.IGConnection
 	pool       ILocationPool
-	location   *entities.Location
+	location   *domain.Location
 }
 
-func NewLocationClient(pool ILocationPool, gconnection websocket.IGConnection, location *entities.Location) ILocationClient {
+func NewLocationClient(pool ILocationPool, gconnection websocket.IGConnection, location *domain.Location) ILocationClient {
 
 	return &LocationClient{
 		ID:         uuid.New().String(),
@@ -34,7 +34,7 @@ func (c *LocationClient) PublishMessage(m interface{}) error {
 	return nil
 }
 
-func (c *LocationClient) GetLocation() *entities.Location {
+func (c *LocationClient) GetLocation() *domain.Location {
 	return c.location
 }
 

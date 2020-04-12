@@ -11,7 +11,7 @@ services:
       - DB_USER=radar
       - DB_PASS=radar
       - DB_NAME=radar
-
+      - DB_EXTENSION='cube,earthdistance'
   backend:
 
     build:  ./backend

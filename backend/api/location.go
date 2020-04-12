@@ -7,8 +7,7 @@ import (
 	"radar/providers/sql"
 	"radar/providers/websocket"
 	"radar/services"
-
-	domainAdapters "radar/adapters/entities"
+	"radar/adapters"
 )
 
 type LocationController struct {
@@ -48,7 +47,7 @@ func (c *LocationController) GetLocations(ctx *gin.Context) {
 		return
 	}
 
-	location, err := domainAdapters.GetLocation(ctx)
+	location, err := adapters.GetLocation(ctx)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, err)
 		return

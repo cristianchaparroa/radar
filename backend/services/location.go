@@ -2,19 +2,19 @@ package services
 
 import (
 	"github.com/google/uuid"
-	"radar/entities"
+	"radar/domain"
 	"radar/providers/sql"
 	"radar/repositories"
 	"time"
 )
 
 type ILocation interface {
-	RegisterLocation(l entities.Location) (entities.Location, error)
+	RegisterLocation(l domain.Location) (domain.Location, error)
 }
 
 type Location struct {
 	sql                sql.Client
-	locationRepository repositories.ILocation
+	locationRepository repositories.Location
 }
 
 func NewLocation(client sql.Client) ILocation {
@@ -23,12 +23,12 @@ func NewLocation(client sql.Client) ILocation {
 
 }
 
-func (s *Location) RegisterLocation(l entities.Location) (entities.Location, error) {
+func (s *Location) RegisterLocation(l domain.Location) (domain.Location, error) {
 
 	t := time.Now()
 	l.UpdatedAt = t
 	l.CreateAt = t
 	l.ID = uuid.New().String()
 
-	return l, s.locationRepository.RegisterLocation(l)
+	return l, s.locationRepository.Register(l)
 }

@@ -2,7 +2,7 @@ package initializer
 
 import (
 	"github.com/jinzhu/gorm"
-	"radar/entities"
+	"radar/domain"
 	"radar/providers/sql"
 )
 
@@ -15,7 +15,9 @@ func NewInitializer(client sql.Client) *Initializer {
 }
 
 func (i *Initializer) CreateTables() {
-	i.db.CreateTable(&entities.Profile{})
-	i.db.CreateTable(&entities.Location{})
-	i.db.CreateTable(&entities.Status{})
+	i.db.CreateTable(&domain.Profile{})
+	i.db.CreateTable(&domain.Location{})
+	i.db.CreateTable(&domain.Status{})
+
+	i.db.Model(&domain.Location{}).AddIndex("idx_geolocation", "latitude", "longitude")
 }

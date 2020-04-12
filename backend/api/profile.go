@@ -3,8 +3,8 @@ package api
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"radar/adapters/presenter"
-	"radar/entities"
+	"radar/adapters"
+	"radar/domain"
 	"radar/presenters"
 	"radar/providers/sql"
 	"radar/services"
@@ -13,7 +13,7 @@ import (
 type ProfileController struct {
 	r               *gin.RouterGroup
 	service         services.IProfile
-	statusService   services.IStatus
+	statusService   services.Status
 	locationService services.ILocation
 }
 
@@ -63,28 +63,21 @@ func (c *ProfileController) CreateProfile(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, err)
 		return
 	}
-	profile := presenter.MapProfilePresenterToEntity(profileRequest.Profile)
+	profile := adapters.MapProfilePresenterToDomain(profileRequest.Profile)
+	location := adapters.MapLocationPresenterToDomain(profileRequest.Location)
+
 	p, err := c.service.Create(profile)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, err)
 		return
 	}
 
-	location := presenter.MapLocationPresenterToEntity(profileRequest.Location)
-	l, err := c.locationService.RegisterLocation(location)
-
+	s, err := c.statusService.Create(location, domain.NegativeStatus)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, err)
 		return
 	}
 
-	s, err := c.statusService.Create(p.ID, l.ID, entities.NegativeStatus)
-
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, err)
-		return
-	}
-
-	response := presenter.NewProfileResponse(p, s)
+	response := adapters.NewProfileResponse(p, s)
 	ctx.JSON(http.StatusOK, response)
 }

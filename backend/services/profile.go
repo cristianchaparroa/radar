@@ -1,15 +1,15 @@
 package services
 
 import (
-	"radar/entities"
+	"radar/domain"
 	"radar/providers/sql"
 	"radar/repositories"
 	"time"
 )
 
 type IProfile interface {
-	Create(p entities.Profile) (entities.Profile, error)
-	GetProfile(id string) (*entities.Profile, error)
+	Create(p domain.Profile) (domain.Profile, error)
+	GetProfile(id string) (*domain.Profile, error)
 }
 
 type Profile struct {
@@ -22,12 +22,12 @@ func NewProfile(sql sql.Client) IProfile {
 	return &Profile{sql: sql, profileRepository: pr}
 }
 
-func (s *Profile) Create(p entities.Profile) (entities.Profile, error) {
+func (s *Profile) Create(p domain.Profile) (domain.Profile, error) {
 	now := time.Now()
 	p.CreatedAt = &now
 	return p, s.profileRepository.Create(p)
 }
 
-func (s *Profile) GetProfile(id string) (*entities.Profile, error) {
+func (s *Profile) GetProfile(id string) (*domain.Profile, error) {
 	return s.profileRepository.FindByID(id)
 }

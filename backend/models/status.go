@@ -1,4 +1,4 @@
-package entities
+package models
 
 import (
 	"github.com/google/uuid"
@@ -14,18 +14,21 @@ const (
 type Status struct {
 	ID         string `gorm:"primary_key" json:"id"`
 	ProfileID  string
-	LocationID string
+
 	Name       string
 	CreatedAt  *time.Time
+	Current 	bool
+	Location Location `gorm:"foreignkey:ID"`
 }
 
-func NewStatus(userID, locationID, name string) *Status {
+func NewStatus(l Location, name string) *Status {
 	t := time.Now()
 	return &Status{
 		ID:         uuid.New().String(),
-		ProfileID:  userID,
+		ProfileID:  l.ProfileID,
 		Name:       name,
-		LocationID: locationID,
 		CreatedAt:  &t,
+		Current:true,
+		Location:l,
 	}
 }
